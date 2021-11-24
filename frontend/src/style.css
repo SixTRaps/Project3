@@ -9,12 +9,11 @@ table, th, td {
 .App{
   background-color: #F5EFE8;
 }
-.navbar .dropdown-menu .form-control {
-  /*background-color: #3C7191;*/
-  height:100px;
-  /*color: white;*/
-  font-size:40px;
+
+.nav_logo{
+  max-height: 70px;
 }
+
 nav{
   height:70px;
   font-size:30px;
