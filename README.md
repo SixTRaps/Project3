@@ -13,16 +13,24 @@ This website is to build a platform for people to offer and seek freelance work 
 
 ## Instruction to build:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 15d2cf8 (Update)
 - Download this project as zip file or clone to your own gits
 - Install [node.js](https://nodejs.org/en/) to your machine
 - Unzip this project on your local machine and cd to this folder location
 1. npm install 
 =======
 
+<<<<<<< HEAD
 - Download this project as zip file or clone to your own gits
 - Install [node.js](https://nodejs.org/en/) to your machine
 - Unzip this project on your local machine and cd to this folder location
 
+1. npm install
+>>>>>>> parent of 15d2cf8 (Update)
+=======
 1. npm install
 >>>>>>> parent of 15d2cf8 (Update)
 2. npm start
@@ -44,10 +52,16 @@ https://docs.google.com/presentation/d/1mxConZM5o330nVFRe7r0Qh7vZmKilQDqG0ZpRg0K
 
 ### Who did what
 <<<<<<< HEAD
+<<<<<<< HEAD
 - Tianhao: help seeker page, category, price filter, login page
 - Kaiwen(Kaitlyn): helper page, zip code filter
 
 =======
+=======
+
+- Tianhao: help seeker page, category, price filter, login page
+- Kaiwen(Kaitlyn): helper page, zip code filter
+>>>>>>> parent of 15d2cf8 (Update)
 
 - Tianhao: help seeker page, category, price filter, login page
 - Kaiwen(Kaitlyn): helper page, zip code filter
