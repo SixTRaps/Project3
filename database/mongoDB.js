@@ -4,7 +4,6 @@ require("dotenv").config();
 function myDB() {
   let project_database;
   let username_global;
-
   const myDB = {};
 
   // MongoDB Connection URI
@@ -62,9 +61,9 @@ function myDB() {
 
   myDB.edit_post = async (json, res) => {
     let target_database;
-    if (json.Mode === "SeekHelp") {
+    if (json['Mode'] === "SeekHelp") {
       target_database = project_database.collection("posts");
-    } else if (json.Mode === "OfferHelp") {
+    } else if (json['Mode'] === "OfferHelp") {
       target_database = project_database.collection("helper");
     }
     const edit = {
@@ -155,17 +154,21 @@ function myDB() {
     console.log("Loading all posts from database.");
     const post_db = project_database.collection("posts");
     let find_all = {};
-    let result = await post_db.find(find_all).toArray();
+    let result = await post_db.find({}).sort({"Ideal Price":-1}).toArray();
+    console.log('here this comes');
+    console.log(result.slice(0, 5));
     res.json(result);
     return result;
   };
+
 
   //get all the helper in the database.
   myDB.getAllHelpers = async (res) => {
     console.log("Loading all posts from database.");
     const post_db = project_database.collection("helper");
     let find_all = {};
-    let result = await post_db.find(find_all).toArray();
+    let result = await post_db.find(find_all).sort({"Ideal Price":-1}).toArray();
+    console.log(result.slice(0, 5));
     res.json(result);
     return result;
   };

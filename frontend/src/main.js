@@ -6,6 +6,9 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import MoreDetails from "./Other Components/MoreDetailsMainPage.js";
 import logo from "./images/logo.png";
+import Dropdown from 'react-bootstrap/Dropdown'
+
+
 function Main() {
   let [Posts, setPosts] = useState([]);
   let [Category_request, setCategory_request] = useState([]);
@@ -23,7 +26,7 @@ function Main() {
   let textMinInput = useRef(0);
   let textMaxInput = useRef(100000);
 
-  let onClickHandler = (e) => {
+  let onClickPriceHandler = (e) => {
     setMinValue(parseInt(textMinInput.current.value));
     setMaxValue(parseInt(textMaxInput.current.value));
     if(!textMinInput.current.value) {
@@ -34,24 +37,43 @@ function Main() {
     }
   };
 
+  let onClickPriceAscending = (e) => {
+    if(ShowHelper){
+      let helpTemp = Posts.sort((firstItem, secondItem) => firstItem["Ideal Price"] - secondItem["Ideal Price"]);
+      setHelpers(helpTemp);
+      console.log('sorting');
+    }
+    else{
+      let postTemp = Posts.sort((firstItem, secondItem) => firstItem["Ideal Price"] - secondItem["Ideal Price"]);
+      setPosts(postTemp);
+    }
+  }
+
+  let onClickPriceDescending = (e) => {
+    if(ShowHelper){
+      let helpTemp = Posts.sort((firstItem, secondItem) => firstItem["Ideal Price"] - secondItem["Ideal Price"]);
+      setHelpers(helpTemp);
+    }
+    else{
+      let postTemp = Posts.sort((firstItem, secondItem) =>  parseFloat(secondItem["Ideal Price"])-parseFloat(firstItem["Ideal Price"]));
+      setPosts(postTemp);
+    }
+  }
+
   //filter on the posts board on the request and helper table
   function filter_on_post(post, select) {
-    let filtered_post = post;
+    let filtered_post = Posts;
     //Category Filter
     if (select === "Select Category" && Input_Zipcode != null) {
       filtered_post = post;
-      console.log(1);
     }
     if (Input_Zipcode !== "") {
       filtered_post = filtered_post.filter((item) =>
           item["Zip Code"].toString().includes(Input_Zipcode)
       );
-      console.log(2);
     }
     if (select !== "Select Category") {
       filtered_post = filtered_post.filter((item) => item.Category === select);
-      console.log(select);
-      console.log(3);
     }
     //Price Range Filter
     filtered_post = filtered_post.filter(
@@ -83,6 +105,7 @@ function Main() {
     }
     runThis().catch(console.dir);
   }, [Category_request_Select]);
+
   //filter all the helpers offer
   useEffect(() => {
     async function runThis() {
@@ -104,6 +127,7 @@ function Main() {
     }
     runThis().catch(console.dir);
   }, [Category_help_Select]);
+
   //the helper tables with all the offers
   function HelperTable() {
     let HelperFiltered = filter_on_post(Helpers, Category_help_Select);
@@ -167,10 +191,14 @@ function Main() {
               <div className="pt-3">
                 <Button
                     type="button"
-                    onClick={onClickHandler}
+                    onClick={onClickPriceHandler}
                 >
                   Submit
                 </Button>
+              </div>
+              <div className="pt-3">
+              <Button variant="outline-info" type="button" onClick={onClickPriceAscending}>Sort price: Ascending &#11014;</Button>
+              <Button variant="outline-info" type="button" onClick={onClickPriceDescending}>Sort price: Descending &#11015;</Button>
               </div>
             </Col>
             <Col sm={9}>{content}</Col>
@@ -218,10 +246,14 @@ function Main() {
             <div className="pt-3">
               <Button
                   type="button"
-                  onClick={onClickHandler}
+                  onClick={onClickPriceHandler}
               >
                 Submit
               </Button>
+            </div>
+            <div className="pt-3">
+              <Button variant="outline-info" type="button" onClick={onClickPriceAscending}>Sort price: Ascending &#11014;</Button>
+              <Button variant="outline-info" type="button" onClick={onClickPriceDescending}>Sort price: Descending &#11015;</Button>
             </div>
           </Col>
           <Col sm={8}>
@@ -230,20 +262,16 @@ function Main() {
               <tr className={"thead-light"}>
                 <th>Category</th>
                 <th>Task Short Description</th>
-                {/*<th>Zip code</th>*/}
                 <th>Ideal Price/hr</th>
                 <th>Date for task</th>
-                {/*<th>Address</th>*/}
                 <th>More details</th>
               </tr>
               {filter_on_post(Posts, Category_request_Select).map((p, i) => (
                   <tr key={i}>
                     <th>{p.Category}</th>
                     <th>{p.Description}</th>
-                    {/*<th>{p["Zip Code"]}</th>*/}
                     <th>{p["Ideal Price"]}</th>
                     <th>{p["Date for task"]}</th>
-                    {/*<th>{p.Address}</th>*/}
                     <td><MoreDetails json={p} /></td>
 
                   </tr>
@@ -305,7 +333,6 @@ function Main() {
               Seek Help
             </Button>
           </span>
-            {/*<Label>Enter your 5 digits ZIP Code</Label>*/}
             <h4 className="pt-3">Enter your 5 digits ZIP Code:</h4>
             <div>
               <input
@@ -328,8 +355,8 @@ function Main() {
             </div>
           </div>
         </div>
-        {ShowHelper ? <PostTable /> : null}
-        {!ShowHelper ? <HelperTable /> : null}
+        {!ShowHelper ? <PostTable /> : null}
+        {ShowHelper ? <HelperTable /> : null}
         <hr></hr>
         <footer>Created by Tianhao Qu, Kaiwen Tian</footer>
       </main>
