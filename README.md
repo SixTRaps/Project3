@@ -12,10 +12,19 @@ https://helpfinder-v1.herokuapp.com/
 This website is to build a platform for people to offer and seek freelance work for litterally everything! You can post and read your work requests, as well as offer your flexibility and expertise on where you can help the others.
 
 ## Instruction to build:
+<<<<<<< HEAD
 - Download this project as zip file or clone to your own gits
 - Install [node.js](https://nodejs.org/en/) to your machine
 - Unzip this project on your local machine and cd to this folder location
 1. npm install 
+=======
+
+- Download this project as zip file or clone to your own gits
+- Install [node.js](https://nodejs.org/en/) to your machine
+- Unzip this project on your local machine and cd to this folder location
+
+1. npm install
+>>>>>>> parent of 15d2cf8 (Update)
 2. npm start
 3. cd frontend => yarn install
 4. cd frontend => yarn start
@@ -34,9 +43,15 @@ https://www.youtube.com/watch?v=d8gvWh5A04U&ab_channel=kaitlyntian
 https://docs.google.com/presentation/d/1mxConZM5o330nVFRe7r0Qh7vZmKilQDqG0ZpRg0K_r0/edit?usp=sharing
 
 ### Who did what
+<<<<<<< HEAD
 - Tianhao: help seeker page, category, price filter, login page
 - Kaiwen(Kaitlyn): helper page, zip code filter
 
+=======
+
+- Tianhao: help seeker page, category, price filter, login page
+- Kaiwen(Kaitlyn): helper page, zip code filter
+>>>>>>> parent of 15d2cf8 (Update)
 
 ### MIT License
 Copyright (c) 2021 Tianhao Qu & Kaiwen Tian
