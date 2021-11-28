@@ -5,11 +5,13 @@
 ### Demo
 
 Please use this link:
-https://helpfinder-v1.herokuapp.com/
+https://helpfinder-v2.herokuapp.com/
 
 ### Objective
 
 This website is to build a platform for people to offer and seek freelance work for litterally everything! You can post and read your work requests, as well as offer your flexibility and expertise on where you can help the others.
+
+
 
 ## Instruction to build:
 - Download this project as zip file or clone to your own gits
