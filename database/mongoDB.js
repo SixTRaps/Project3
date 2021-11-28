@@ -9,8 +9,7 @@ function myDB() {
 
   // MongoDB Connection URI
   // MAKE SURE TO DELETE CONNECTION STRING UPON COMPLETION
-  const uri =
-    process.env.MONGO_DB;
+  const uri = process.env.MONGO_DB;
 
   myDB.establishConnection = async () => {
     const client = new MongoClient(uri);
@@ -75,8 +74,6 @@ function myDB() {
         "Date for task": json["Date for task"],
         "Zip Code": json["Zip Code"],
         Address: json.Address,
-        Longitude: json.Longitude,
-        Latitude: json.Latitude,
       },
     };
     const query = { _id: ObjectId(json._id) };
@@ -116,7 +113,6 @@ function myDB() {
 
   myDB.process_username_password_input = async (username, password, res) => {
     const collection_info = project_database.collection("username_password");
-
     const query = {
       username: username,
     };
@@ -170,15 +166,10 @@ function myDB() {
     return result;
   };
 
-  //helper function for Passport.js doing authentication
-  myDB.accessUserDataDB = async (username) => {
-    const username_password = project_database.collection("username_password");
-    let result = await username_password.findOne({ username: username });
-    return result;
-  };
-
-  myDB.setGlobalUser = async (username) => {
-    username_global = username;
+  //get counts from certain collections
+  myDB.getCounts = async (col_name) => {
+    const performance_db = project_database.collection(col_name);
+    return await performance_db.count();
   };
 
   return myDB;
