@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
@@ -19,7 +19,23 @@ function Main() {
       useState("Select Category");
   let [ShowHelper, setHelperPage] = useState(false);
   let [Input_Zipcode, setZipCode] = useState("");
+  let textMinInput = useRef(0);
+  let textMaxInput = useRef(100000);
+
   const navigate = useNavigate();
+
+
+  let onClickHandler = (e) => {
+    setMinValue(parseInt(textMinInput.current.value));
+    setMaxValue(parseInt(textMaxInput.current.value));
+    if(!textMinInput.current.value) {
+      setMinValue(0);
+    }
+    if(!textMaxInput.current.value){
+      setMaxValue(10000000);
+    }
+  };
+
   //filter on the posts board on the request and helper table
   function filter_on_post(post, select) {
     let filtered_post = post;
@@ -138,19 +154,25 @@ function Main() {
                 <p>Minimum Ideal Price($):</p>
                 <input
                     type="number"
-                    value={MinValue}
-                    onChange={(e) => {
-                      setMinValue(e.target.value);
-                    }}
+                    ref={textMinInput}
+                    placeholder={textMinInput.current.value}
                 ></input>
+              </div>
+              <div className={"pt-1"}>
                 <p>Maximum Ideal Price($):</p>
                 <input
                     type="number"
-                    value={MaxValue}
-                    onChange={(e) => {
-                      setMaxValue(e.target.value);
-                    }}
+                    ref={textMaxInput}
+                    placeholder={textMaxInput.current.value}
                 ></input>
+              </div>
+              <div className="pt-3">
+                <Button
+                    type="button"
+                    onClick={onClickHandler}
+                >
+                  Submit
+                </Button>
               </div>
             </Col>
             <Col sm={9}>{content}</Col>
@@ -183,19 +205,25 @@ function Main() {
               <p>Minimum Ideal Price($):</p>
               <input
                   type="number"
-                  value={MinValue}
-                  onChange={(e) => {
-                    setMinValue(e.target.value);
-                  }}
+                  ref={textMinInput}
+                  placeholder={textMinInput.current.value}
               ></input>
+            </div>
+            <div className={"pt-1"}>
               <p>Maximum Ideal Price($):</p>
               <input
                   type="number"
-                  value={MaxValue}
-                  onChange={(e) => {
-                    setMaxValue(e.target.value);
-                  }}
+                  ref={textMaxInput}
+                  placeholder={textMaxInput.current.value}
               ></input>
+            </div>
+            <div className="pt-3">
+              <Button
+                  type="button"
+                  onClick={onClickHandler}
+              >
+                Submit
+              </Button>
             </div>
           </Col>
           <Col sm={8}>
