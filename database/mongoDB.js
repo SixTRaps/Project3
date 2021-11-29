@@ -55,7 +55,6 @@ function myDB() {
         .catch(console.dir);
       username_global = username;
       res.json({ status: "success" });
-      // res.redirect("/login");
     }
   };
 
@@ -150,25 +149,19 @@ function myDB() {
   };
 
   //get all the posts in the database.
-  myDB.getAllPosts = async (res) => {
+  myDB.getAllPosts = async (bol,res) => {
     console.log("Loading all posts from database.");
     const post_db = project_database.collection("posts");
-    let find_all = {};
-    let result = await post_db.find({}).sort({"Ideal Price":-1}).toArray();
-    console.log('here this comes');
-    console.log(result.slice(0, 5));
+    let result = await post_db.find({}).sort({"Ideal Price":bol}).toArray();
     res.json(result);
     return result;
   };
 
-
   //get all the helper in the database.
-  myDB.getAllHelpers = async (res) => {
-    console.log("Loading all posts from database.");
+  myDB.getAllHelpers = async (bol,res) => {
+    console.log("Loading all helper posts from database.");
     const post_db = project_database.collection("helper");
-    let find_all = {};
-    let result = await post_db.find(find_all).sort({"Ideal Price":-1}).toArray();
-    console.log(result.slice(0, 5));
+    let result = await post_db.find({}).sort({"Ideal Price":bol}).toArray();
     res.json(result);
     return result;
   };

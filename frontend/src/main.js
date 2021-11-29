@@ -21,10 +21,35 @@ function Main() {
   let [Category_request_Select, SetCategory_request_Select] =
       useState("Select Category");
   let [ShowHelper, setHelperPage] = useState(false);
+  let [SortPostAsc, setPostSortAsc] = useState(1);
+  let [SortHelperAsc, setHelperAsc] = useState(1);
   let [Input_Zipcode, setZipCode] = useState("");
   const navigate = useNavigate();
   let textMinInput = useRef(0);
   let textMaxInput = useRef(100000);
+
+  //frontend sort
+  // let onClickPriceAscending = (e) => {
+  //   if(ShowHelper){
+  //     let helpTemp = Posts.sort((firstItem, secondItem) => firstItem["Ideal Price"] - secondItem["Ideal Price"]);
+  //     setHelpers(helpTemp);
+  //     console.log('sorting');
+  //   }
+  //   else{
+  //     let postTemp = Posts.sort((firstItem, secondItem) => firstItem["Ideal Price"] - secondItem["Ideal Price"]);
+  //     setPosts(postTemp);
+  //   }
+  // }
+  // let onClickPriceDescending = (e) => {
+  //   if(ShowHelper){
+  //     let helpTemp = Posts.sort((firstItem, secondItem) => firstItem["Ideal Price"] - secondItem["Ideal Price"]);
+  //     setHelpers(helpTemp);
+  //   }
+  //   else{
+  //     let postTemp = Posts.sort((firstItem, secondItem) =>  parseFloat(secondItem["Ideal Price"])-parseFloat(firstItem["Ideal Price"]));
+  //     setPosts(postTemp);
+  //   }
+  // }
 
   let onClickPriceHandler = (e) => {
     setMinValue(parseInt(textMinInput.current.value));
@@ -36,29 +61,6 @@ function Main() {
       setMaxValue(10000000);
     }
   };
-
-  let onClickPriceAscending = (e) => {
-    if(ShowHelper){
-      let helpTemp = Posts.sort((firstItem, secondItem) => firstItem["Ideal Price"] - secondItem["Ideal Price"]);
-      setHelpers(helpTemp);
-      console.log('sorting');
-    }
-    else{
-      let postTemp = Posts.sort((firstItem, secondItem) => firstItem["Ideal Price"] - secondItem["Ideal Price"]);
-      setPosts(postTemp);
-    }
-  }
-
-  let onClickPriceDescending = (e) => {
-    if(ShowHelper){
-      let helpTemp = Posts.sort((firstItem, secondItem) => firstItem["Ideal Price"] - secondItem["Ideal Price"]);
-      setHelpers(helpTemp);
-    }
-    else{
-      let postTemp = Posts.sort((firstItem, secondItem) =>  parseFloat(secondItem["Ideal Price"])-parseFloat(firstItem["Ideal Price"]));
-      setPosts(postTemp);
-    }
-  }
 
   //filter on the posts board on the request and helper table
   function filter_on_post(post, select) {
@@ -82,12 +84,18 @@ function Main() {
     );
     return filtered_post;
   }
+
   //fetch all requests
   useEffect(() => {
     async function runThis() {
       let raw = await fetch(
-          `api/load-all-post?category=${Category_request_Select}`
-      );
+          `/api/load-all-post?category=${Category_request_Select}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              bol: SortPostAsc,
+            }),
+          });
       let res = await raw.json();
       let categoryTemp = [];
       let postTemp = [];
@@ -104,12 +112,18 @@ function Main() {
       setPosts(postTemp);
     }
     runThis().catch(console.dir);
-  }, [Category_request_Select]);
+  }, [Category_request_Select,SortPostAsc]);
 
   //filter all the helpers offer
   useEffect(() => {
     async function runThis() {
-      let raw = await fetch(`api/load-helpers`);
+      let raw = await fetch(`/api/load-helpers`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bol: SortHelperAsc,
+        }),
+      });
       let res = await raw.json();
       let categoryOffers = [];
       let postTemp = [];
@@ -126,7 +140,7 @@ function Main() {
       setHelpers(postTemp);
     }
     runThis().catch(console.dir);
-  }, [Category_help_Select]);
+  }, [Category_help_Select,SortHelperAsc]);
 
   //the helper tables with all the offers
   function HelperTable() {
@@ -197,8 +211,8 @@ function Main() {
                 </Button>
               </div>
               <div className="pt-3">
-              <Button variant="outline-info" type="button" onClick={onClickPriceAscending}>Sort price: Ascending &#11014;</Button>
-              <Button variant="outline-info" type="button" onClick={onClickPriceDescending}>Sort price: Descending &#11015;</Button>
+              <Button variant="outline-info" type="button" onClick={() => setHelperAsc(1)}>Sort price: Ascending &#11014;</Button>
+              <Button variant="outline-info" type="button" onClick={() => setHelperAsc(-1)}>Sort price: Descending &#11015;</Button>
               </div>
             </Col>
             <Col sm={9}>{content}</Col>
@@ -252,8 +266,8 @@ function Main() {
               </Button>
             </div>
             <div className="pt-3">
-              <Button variant="outline-info" type="button" onClick={onClickPriceAscending}>Sort price: Ascending &#11014;</Button>
-              <Button variant="outline-info" type="button" onClick={onClickPriceDescending}>Sort price: Descending &#11015;</Button>
+              <Button variant="outline-info" type="button" onClick={() => setPostSortAsc(1)}>Sort price: Ascending &#11014;</Button>
+              <Button variant="outline-info" type="button" onClick={() => setPostSortAsc(-1)}>Sort price: Descending &#11015;</Button>
             </div>
           </Col>
           <Col sm={8}>
